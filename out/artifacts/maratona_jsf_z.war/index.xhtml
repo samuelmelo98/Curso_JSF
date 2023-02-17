@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+
+</h:head>
+
+
+<h:body>
+    <p:importEnum type="model.enums.Turno" var="turnos" allSuffix="ALL_ENUM_VALUES"/>
+    <div>
+        <h:outputLabel value="#{estudanteRegistrarBean.estudante.nome}"></h:outputLabel><br/>
+        <h:outputLabel value="#{estudanteRegistrarBean.estudante.sobreNome}"></h:outputLabel>
+        <!-- Outra maneira de fazer a mesma coisa -->
+        <h:outputLabel value="#{estudanteRegistrarBean.estudante['nome']}"></h:outputLabel><br/>
+        <h:outputLabel value="#{estudanteRegistrarBean.estudante['sobreNome']}"></h:outputLabel>
+        <!-- Comparaçoes em render -->
+        <br/>
+
+        <h3>Nota1 é igual a nota2 ?</h3>
+        <h:outputLabel
+                value="Nota1 = #{estudanteRegistrarBean.estudante.nota1} Nota2 = #{estudanteRegistrarBean.estudante.nota2} São iguais? #{estudanteRegistrarBean.estudante.nota1 eq estudanteRegistrarBean.estudante.nota2}"></h:outputLabel><br/>
+        <!-- && Pode usar $ para fazer leitura no bean-->
+        <h:outputLabel value="${estudanteRegistrarBean.estudante['sobreNome']}"></h:outputLabel>
+        <h:outputText value=" #{estudanteRegistrarBean.estudante.nome}"/>
+        <h:outputText value=" #{estudanteRegistrarBean.estudante.nome += ' concatena algo'}"/>
+        <!--
+        Palavras reservadas JSF
+        and, or, not, eq, ne, lt, gt, le, ge, true, false, null, empty, div, mod, instanceof
+        -->
+        <h1>Enum- Como utilizar Enums JSF</h1>
+        <h:outputText value="#{estudanteRegistrarBean.estudante.turno eq 'NOTURNO'}"/><br/>
+        <h:outputText value="#{estudanteRegistrarBean.estudante.turno eq turnos.MATUTINO}"/><br/>
+        <h:outputText value="#{estudanteRegistrarBean.estudante.turno.equals(turnos.MATUTINO)}"/><br/>
+        <!--Arrays  ctrl + / adiciona comentarios - Aula 07-->
+        <p:outputLabel value="Arrays"/><br/>
+        <p:outputLabel value="#{estudanteRegistrarBean.nomesArray[0]}"/><br/>
+        <!--    For array     -->
+        <ui:repeat value="#{estudanteRegistrarBean.nomesArray}" var="array">
+            <p:outputLabel value="#{array += ' - posição do array = ' += array.length()} "/><br/>
+        </ui:repeat>
+
+        <!-- Aula - 07    For Set Interação com Set     -->
+        <p:outputLabel value="Set toArray()" style="background-color: blueviolet"/><br/>
+        <p:outputLabel value="#{estudanteRegistrarBean.nomeSet.toArray()}"/><br/>
+        <ui:repeat value="#{estudanteRegistrarBean.nomeSet}" var="set">
+            <p:outputLabel value="#{set += ' - posição do lista = ' += set} "/><br/>
+        </ui:repeat>
+        <!--    For Set Interação com Set sem toArray()     -->
+        <p:outputLabel value="Set1 sem toArray()" style="background-color: blue"/><br/>
+        <p:outputLabel value="#{estudanteRegistrarBean.nomeSet}"/><br/>
+        <ui:repeat value="#{estudanteRegistrarBean.nomeSet}" var="set1">
+            <p:outputLabel value="#{set1 += ' - posição do lista = ' += set1} "/><br/>
+        </ui:repeat>
+        <!-- Aula-  07 meio pra frente       Map Exemplo-->
+
+        <h:outputLabel value="################MAP################"/>
+        <h2>Map chave valor:</h2>
+        <h:outputLabel value="#{estudanteRegistrarBean.nomesMap}"/><br/>
+        <h:outputLabel value="#{estudanteRegistrarBean.nomesMap.get('Scorpion')}"/><br/>
+        <h2>Map completo ToString</h2>
+        <h2>Chave e valor - key - value</h2>
+        <ui:repeat value="#{estudanteRegistrarBean.nomesMap.entrySet().toArray()}" var="entry">
+            <h:outputLabel value="#{entry.key} "/>
+            <h:outputLabel value="#{entry.value} "/>
+        </ui:repeat>
+        <!--        Aula 08 Executando métodos na view e Passando parametros -->
+        <h2>Aula 08</h2>
+        #{estudanteRegistrarBean.estudante.nome="samuel"}
+        #{estudanteRegistrarBean.executar()}
+        #{estudanteRegistrarBean.executar('parametro_passado')}
+        #{estudanteRegistrarBean.executar("Passando comaspas duplas")}
+        <!-- Pegando o valor do Bean e passando no método-->
+        #{estudanteRegistrarBean.executar(estudanteRegistrarBean.executar(estudanteRegistrarBean.estudante.nome))}
+
+    </div>
+</h:body>
+</html>
